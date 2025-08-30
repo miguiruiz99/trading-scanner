@@ -1,8 +1,8 @@
-# 🎯 Crypto Sniper
+# 🎯 Trading Scanner
 
 Un escáner avanzado de criptomonedas con análisis técnico en tiempo real, construido con Next.js 15 y la API de Binance.
 
-![Crypto Sniper](public/placeholder.svg)
+![Trading Scanner](public/placeholder.svg)
 
 ## ✨ Características
 
@@ -18,15 +18,6 @@ Un escáner avanzado de criptomonedas con análisis técnico en tiempo real, con
 ## 🚀 Demo en Vivo
 
 Visita la aplicación desplegada: [trading-scanner.vercel.app](https://trading-scanner.vercel.app)
-
-## 🛠️ Tecnologías
-
-- **Frontend**: Next.js 15, React 18, TypeScript
-- **Styling**: Tailwind CSS, Radix UI
-- **Charts**: Lightweight Charts, Recharts
-- **API**: Binance Public API
-- **Deployment**: Vercel
-- **Technical Analysis**: technicalindicators library
 
 ## 📦 Instalación
 
@@ -85,12 +76,7 @@ NEXT_PUBLIC_CACHE_TIMEOUT=30000
 
 ## 📊 Pares Soportados
 
-La aplicación monitorea 20 pares principales de criptomonedas:
-
-- **Major**: BTC/USDT, ETH/USDT, BNB/USDT
-- **Altcoins**: ADA/USDT, SOL/USDT, XRP/USDT, DOT/USDT
-- **DeFi**: LINK/USDT, MATIC/USDT, AVAX/USDT
-- **Y más**: ATOM/USDT, FTM/USDT, NEAR/USDT, etc.
+La aplicación monitorea los 100 pares principales de criptomonedas:
 
 ## 🎯 Indicadores Técnicos
 
@@ -110,29 +96,6 @@ La aplicación monitorea 20 pares principales de criptomonedas:
 - **Pullbacks**: Retrocesos en tendencia alcista
 - **Volume Spikes**: Picos de volumen significativos
 - **Bollinger Squeeze**: Compresiones seguidas de expansión
-
-## 🔄 Arquitectura
-
-```
-lib/
-├── binance-api.ts      # Cliente API de Binance
-├── data-service.ts     # Servicio híbrido de datos
-├── indicators.ts       # Cálculos de indicadores técnicos
-├── mock-data.ts        # Datos simulados
-└── utils.ts           # Utilidades generales
-
-components/
-├── ui/                # Componentes base (Radix UI)
-├── scanner.tsx        # Componente principal del escáner
-├── pair-detail.tsx    # Vista detallada de pares
-├── trading-chart.tsx  # Gráficos de trading
-└── ...
-
-app/
-├── layout.tsx         # Layout principal
-├── page.tsx          # Página principal
-└── globals.css       # Estilos globales
-```
 
 ## 🤝 Contribuir
 
@@ -155,8 +118,7 @@ Esta aplicación es solo para fines educativos e informativos. No constituye ase
 - [Binance](https://binance.com) por su API pública
 - [TradingView](https://tradingview.com) por la inspiración del diseño
 - [Radix UI](https://radix-ui.com) por los componentes accesibles
-- [Tailwind CSS](https://tailwindcss.com) por el sistema de diseño
 
 ---
 
-Desarrollado con ❤️ por miguelrbb(https://github.com/tu-usuario)
+Desarrollado con ❤️ por miguelrbb
