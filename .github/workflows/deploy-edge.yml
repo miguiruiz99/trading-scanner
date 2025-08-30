@@ -2,8 +2,8 @@ name: Supabase Ingest Cron
 
 on:
   schedule:
-    - cron: "*/5 * * * *" # cada 5 minutos en UTC
-  workflow_dispatch: {} # para poder lanzarlo a mano si quieres
+    - cron: "*/5 * * * *" # cada 5 minutos (UTC)
+  workflow_dispatch: {}
 
 jobs:
   call-ingest:
@@ -12,9 +12,6 @@ jobs:
       - name: Call Supabase Edge Function
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
-          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+          PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
         run: |
-          URL="https://${{ secrets.SUPABASE_PROJECT_REF }}.functions.supabase.co/ingest-5m"
-          curl -sS -X POST \
-            -H "x-cron-secret: $CRON_SECRET" \
-            $URL
+          curl -sS -X POST \ -H "x-cron-secret: ZwVE8_kaMrw3Jxq" -H "Authorization: Bearer dd14b4d53cbaa0b19edf98d61c1150942940a9f0b8400d0714cb581adfd7f3a1" \ https://qglltyflknoqcimpburc.supabase.co/functions/v1/dynamic-handler
