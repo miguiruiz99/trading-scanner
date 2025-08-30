@@ -15,7 +15,4 @@ jobs:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           PROJECT_REF: ${{ secrets.PROJECT_REF }}
         run: |
-          curl -sS -X POST \
-            -H "x-cron-secret: $CRON_SECRET" \
-            -H "Authorization: Bearer $ACCESS_TOKEN" \
-            "https://$PROJECT_REF.functions.supabase.co/functions/v1/swift-processor"
+          curl -sS -X POST -H "x-cron-secret: $CRON_SECRET" -H "Authorization: Bearer $ACCESS_TOKEN" "https://$PROJECT_REF.functions.supabase.co/functions/v1/swift-processor"
