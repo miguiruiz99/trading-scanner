@@ -129,6 +129,7 @@ export function AdvancedFilters({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="0">0</SelectItem>
                   <SelectItem value="20M">20M</SelectItem>
                   <SelectItem value="50M">50M</SelectItem>
                   <SelectItem value="100M">100M</SelectItem>

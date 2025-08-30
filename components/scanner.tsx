@@ -4,16 +4,10 @@ import type React from "react";
 
 import { useState, useMemo, useEffect } from "react";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { TrendingUp, TrendingDown, Volume2, ArrowUpDown } from "lucide-react";
-import { PairDetail } from "./pair-detail";
+import { PairDetail } from "./PairDetail";
 import { AdvancedFilters } from "./advanced-filters";
-import {
-  getMarketData,
-  toggleDataSource,
-  getServiceStatus,
-} from "@/lib/data-service";
+import { getMarketData } from "@/lib/data-service";
 import { type CryptoPair } from "@/lib/mock-data";
 import { Indicator, SortBy, SortOrder } from "@/enums/enums";
 import { TableView } from "./TableView";

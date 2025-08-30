@@ -17,7 +17,7 @@ Un escáner avanzado de criptomonedas con análisis técnico en tiempo real, con
 
 ## 🚀 Demo en Vivo
 
-Visita la aplicación desplegada: [crypto-sniper.vercel.app](https://crypto-sniper.vercel.app)
+Visita la aplicación desplegada: [trading-scanner.vercel.app](https://trading-scanner.vercel.app)
 
 ## 🛠️ Tecnologías
 
@@ -33,8 +33,8 @@ Visita la aplicación desplegada: [crypto-sniper.vercel.app](https://crypto-snip
 1. **Clona el repositorio**
 
    ```bash
-   git clone https://github.com/tu-usuario/crypto-sniper.git
-   cd crypto-sniper
+   git clone https://github.com/tu-usuario/trading-scanner.git
+   cd trading-scanner
    ```
 
 2. **Instala las dependencias**
@@ -71,12 +71,7 @@ npm run lint     # Linter de código
 
 ### Fuente de Datos
 
-La aplicación puede usar dos fuentes de datos:
-
-- **Datos Reales**: API pública de Binance (por defecto en producción)
-- **Datos Mock**: Datos simulados para desarrollo y testing
-
-Puedes alternar entre ambos usando el botón en la interfaz.
+La aplicación utiliza la API pública de Binance
 
 ### Variables de Entorno
 
@@ -139,40 +134,6 @@ app/
 └── globals.css       # Estilos globales
 ```
 
-## 🚀 Despliegue en Vercel
-
-1. **Conecta tu repositorio a Vercel**
-
-   - Ve a [vercel.com](https://vercel.com)
-   - Importa tu proyecto desde GitHub
-
-2. **Configuración automática**
-
-   - Vercel detectará Next.js automáticamente
-   - No necesitas variables de entorno adicionales
-
-3. **Deploy**
-   - Vercel desplegará automáticamente en cada push
-
-### Configuración Manual
-
-Si prefieres usar Vercel CLI:
-
-```bash
-npm i -g vercel
-vercel login
-vercel --prod
-```
-
-## 📈 Performance
-
-- **Cache**: 30 segundos para datos de mercado
-- **Rate Limiting**: Respetuoso con límites de API
-- **Optimizaciones**:
-  - Lazy loading de componentes
-  - Memoización de cálculos pesados
-  - Requests paralelas cuando es posible
-
 ## 🤝 Contribuir
 
 1. Fork el proyecto
@@ -198,4 +159,4 @@ Esta aplicación es solo para fines educativos e informativos. No constituye ase
 
 ---
 
-Desarrollado con ❤️ por [Tu Nombre](https://github.com/tu-usuario)
+Desarrollado con ❤️ por miguelrbb(https://github.com/tu-usuario)

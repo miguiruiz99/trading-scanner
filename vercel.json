@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "name": "crypto-sniper",
-  "alias": ["crypto-sniper"],
+  "name": "trading-scanner",
+  "alias": ["trading-scanner"],
   "regions": ["iad1"],
   "framework": "nextjs",
   "buildCommand": "npm run build",
