@@ -1,0 +1,18 @@
+name: Supabase Ingest Cron
+
+on:
+  schedule:
+    - cron: "*/5 * * * *" # cada 5 minutos en UTC
+  workflow_dispatch: {} # para poder lanzarlo a mano si quieres
+
+jobs:
+  call-ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Supabase Edge Function
+        run: |
+          curl -sS -X POST \
+            -H "x-cron-secret: $CRON_SECRET" \
+            https://${{ secrets.SUPABASE_PROJECT_REF }}.functions.supabase.co/ingest-5m
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
