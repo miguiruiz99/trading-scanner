@@ -12,6 +12,7 @@ jobs:
       - name: Call Supabase Edge Function
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
-          PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          PROJECT_REF: ${{ secrets.PROJECT_REF }}
         run: |
-          curl -sS -X POST \ -H "x-cron-secret: ZwVE8_kaMrw3Jxq" -H "Authorization: Bearer dd14b4d53cbaa0b19edf98d61c1150942940a9f0b8400d0714cb581adfd7f3a1" \ https://qglltyflknoqcimpburc.supabase.co/functions/v1/dynamic-handler
+          curl -sS -X POST \ -H "x-cron-secret: ${CRON_SECRET}" -H "Authorization: Bearer ${ACCESS_TOKEN}" \ https://${PROJECT_REF}.functions.supabase.co/functions/v1/dynamic-handler
