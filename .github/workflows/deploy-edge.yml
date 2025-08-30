@@ -10,9 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Call Supabase Edge Function
-        run: |
-          curl -sS -X POST \
-            -H "x-cron-secret: $CRON_SECRET" \
-            https://${{ secrets.SUPABASE_PROJECT_REF }}.functions.supabase.co/ingest-5m
         env:
           CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          SUPABASE_PROJECT_REF: ${{ secrets.SUPABASE_PROJECT_REF }}
+        run: |
+          URL="https://${{ secrets.SUPABASE_PROJECT_REF }}.functions.supabase.co/ingest-5m"
+          curl -sS -X POST \
+            -H "x-cron-secret: $CRON_SECRET" \
+            $URL
