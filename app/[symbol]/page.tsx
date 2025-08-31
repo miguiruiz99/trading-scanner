@@ -25,28 +25,28 @@ import {
   calculateRSI,
   generateTradingSetups,
   generateAdvancedTradingSetups,
-  type CandleData,
   type IndicatorData,
   type TradingSetup,
   ScannerPair,
 } from "@/lib/mock-data";
-import { useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
+import { getPairDetail } from "@/lib/api-services";
 
 interface PairDetailProps {
-  pair: ScannerPair;
+  onBack: () => void;
   timeframe: string;
 }
 
-export function PairDetail({
-  pair,
+export default function PairDetail({
+  onBack,
   timeframe: initialTimeframe,
 }: PairDetailProps) {
-  const router = useRouter();
+  const { symbol } = useParams<{ symbol: string }>();
+  const [pair, setPair] = useState<ScannerPair | null>(null);
   const [timeframe, setTimeframe] = useState(initialTimeframe);
   const [currentPrice, setCurrentPrice] = useState(0);
   const [priceChange, setPriceChange] = useState(0);
   const [chartType, setChartType] = useState<"candles" | "line">("candles");
-  const [candles, setCandles] = useState<CandleData[]>([]);
   const [ema20, setEma20] = useState<IndicatorData[]>([]);
   const [ema50, setEma50] = useState<IndicatorData[]>([]);
   const [ema200, setEma200] = useState<IndicatorData[]>([]);
@@ -70,18 +70,19 @@ export function PairDetail({
   });
 
   useEffect(() => {
-    if (!pair) return;
+    if (!symbol) return;
 
     // Generate realistic candle data
-    const loadCandleData = () => {
+    const loadCandleData = async () => {
       try {
-        setCandles(pair.candles);
+        const pair = await getPairDetail(symbol);
+        setPair(pair);
 
         // Calculate technical indicators
-        const ema20Data = calculateEMA(candles, 20);
-        const ema50Data = calculateEMA(candles, 50);
-        const ema200Data = calculateEMA(candles, 200);
-        const rsiData = calculateRSI(candles, 14);
+        const ema20Data = calculateEMA(pair.candles, 20);
+        const ema50Data = calculateEMA(pair.candles, 50);
+        const ema200Data = calculateEMA(pair.candles, 200);
+        const rsiData = calculateRSI(pair.candles, 14);
 
         setEma20(ema20Data);
         setEma50(ema50Data);
@@ -89,13 +90,13 @@ export function PairDetail({
         setRsi(rsiData);
 
         const basicSetups = generateTradingSetups(
-          candles,
+          pair.candles,
           ema20Data,
           ema50Data,
           rsiData
         );
         const advancedSetups = generateAdvancedTradingSetups(
-          candles,
+          pair.candles,
           ema20Data,
           ema50Data,
           ema200Data,
@@ -116,9 +117,9 @@ export function PairDetail({
         setSetups(uniqueSetups);
 
         // Set current price and change
-        if (candles.length > 1) {
-          const latest = candles[candles.length - 1];
-          const previous = candles[candles.length - 2];
+        if (pair.candles.length > 1) {
+          const latest = pair.candles[pair.candles.length - 1];
+          const previous = pair.candles[pair.candles.length - 2];
           setCurrentPrice(latest.close);
           setPriceChange(
             ((latest.close - previous.close) / previous.close) * 100
@@ -145,7 +146,7 @@ export function PairDetail({
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [pair, timeframe, selectedIndicators, indicatorParams]);
+  }, [symbol, timeframe, selectedIndicators, indicatorParams]);
 
   const getSetupBadgeColor = (type: string) => {
     switch (type) {
@@ -167,21 +168,16 @@ export function PairDetail({
   const currentRSI = rsi.length > 0 ? rsi[rsi.length - 1].value : 50;
 
   return (
-    <div className="m-6 w-full bg-blue-100">
+    <div className="space-y-6 w-full">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => router.back()}
-            className="gap-2"
-          >
+          <Button variant="ghost" size="sm" onClick={onBack} className="gap-2">
             <ArrowLeft className="h-4 w-4" />
             Volver
           </Button>
 
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold">{pair.symbol}</h1>
+            <h1 className="text-2xl font-bold">{symbol}</h1>
             {priceChange >= 0 ? (
               <TrendingUp className="h-5 w-5 text-trading-green" />
             ) : (
@@ -258,7 +254,7 @@ export function PairDetail({
         {/* Chart Area */}
         <div className="lg:col-span-3">
           <TradingChart
-            candles={candles}
+            candles={pair?.candles ?? []}
             ema20={ema20}
             ema50={ema50}
             ema200={ema200}
@@ -303,7 +299,7 @@ export function PairDetail({
           </Card>
 
           {/* Scan History */}
-          <Card className="p-4">
+          {/* <Card className="p-4">
             <h3 className="font-semibold mb-3">Historial de Scans</h3>
             <div className="space-y-2 max-h-48 overflow-y-auto">
               {scanHistory.map((scan, index) => (
@@ -335,7 +331,7 @@ export function PairDetail({
                 </div>
               ))}
             </div>
-          </Card>
+          </Card> */}
 
           {/* Quick Stats */}
           <Card className="p-4">

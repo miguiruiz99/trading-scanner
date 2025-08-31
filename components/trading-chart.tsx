@@ -181,16 +181,16 @@ export function TradingChart({
       ema50Series.setData(ema50.map((d) => ({ time: d.time, value: d.value })));
     }
 
-    if (ema200.length > 0) {
-      const ema200Series = chart.addLineSeries({
-        color: "#ef4444",
-        lineWidth: 1,
-        title: "EMA 200",
-      });
-      ema200Series.setData(
-        ema200.map((d) => ({ time: d.time, value: d.value }))
-      );
-    }
+    // if (ema200.length > 0) {
+    //   const ema200Series = chart.addLineSeries({
+    //     color: "#ef4444",
+    //     lineWidth: 1,
+    //     title: "EMA 200",
+    //   });
+    //   ema200Series.setData(
+    //     ema200.map((d) => ({ time: d.time, value: d.value }))
+    //   );
+    // }
 
     const volumeSeries = volumeChart.addHistogramSeries({
       color: "#64748b",

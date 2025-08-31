@@ -76,7 +76,7 @@ export function AdvancedFilters({
 
   const handleResetFilters = () => {
     setOnlyActiveSetups(false);
-    setMinVolume("20M");
+    setMinVolume("0");
     setTrendFilter("all");
     setMinScore(0);
     setRsiRange([0, 100]);
@@ -94,7 +94,7 @@ export function AdvancedFilters({
   const getActiveFiltersCount = () => {
     let count = 0;
     if (onlyActiveSetups) count++;
-    if (minVolume !== "20M") count++;
+    if (minVolume !== "0") count++;
     if (trendFilter !== "all") count++;
     if (minScore > 0) count++;
     if (rsiRange[0] > 0 || rsiRange[1] < 100) count++;
@@ -129,7 +129,7 @@ export function AdvancedFilters({
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="0">0</SelectItem>
+                  <SelectItem value="0">0M</SelectItem>
                   <SelectItem value="20M">20M</SelectItem>
                   <SelectItem value="50M">50M</SelectItem>
                   <SelectItem value="100M">100M</SelectItem>

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Header } from "@/components/header";
+import { Header, Timeframe } from "@/components/header";
 import { Scanner } from "@/components/scanner";
 
 export default function HomePage() {
-  const [timeframe, setTimeframe] = useState("15m");
+  const [timeframe, setTimeframe] = useState<Timeframe>("5m");
 
   return (
     <div className="min-h-screen bg-background">
