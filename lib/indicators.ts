@@ -176,9 +176,6 @@ export function evalSetups(data: Candle[]): EvalResult {
   if (!data?.length) {
     return { badges: [], score: 0, why: [], indicators: {} };
   }
-  // if (!data?.length || data.length < 220) {
-  //   return { badges: [], score: 0, why: [], indicators: {} };
-  // }
 
   // Trabajamos SIEMPRE con velas cerradas (asume que ya recortaste la vela viva fuera)
   const { close, high, low, volume } = toSeries(data);
@@ -190,7 +187,7 @@ export function evalSetups(data: Candle[]): EvalResult {
   const rsi14Arr = rsi(close, 14);
   const ema20Arr = ema(close, 20);
   const ema50Arr = ema(close, 50);
-  // const ema200Arr = ema(close, 200);
+  const ema200Arr = ema(close, 200);
   const volSma20Arr = sma(volume, 20);
   const adx14Arr = adx(high, low, close, 14);
   const bbArr = bollinger(close, 20, 2);
@@ -199,7 +196,7 @@ export function evalSetups(data: Candle[]): EvalResult {
   const rsiLast = lastAlignedValue(rsi14Arr, n);
   const e20 = lastAlignedValue(ema20Arr, n);
   const e50 = lastAlignedValue(ema50Arr, n);
-  // const e200 = lastAlignedValue(ema200Arr, n);
+  const e200 = lastAlignedValue(ema200Arr, n);
   const vS20 = lastAlignedValue(volSma20Arr, n);
   const adxLast = last(alx(adx14Arr)); // helper abajo
   const bbLast = last(bbArr);
@@ -230,25 +227,25 @@ export function evalSetups(data: Candle[]): EvalResult {
     score += 2;
     why.push(`Cruce EMA20/EMA50: ${cross20_50}`);
   }
-  // const cross50_200 = crossed(ema50Arr, ema200Arr);
-  // if (cross50_200) {
-  //   badges.push("EMA50↕EMA200");
-  //   score += 3;
-  //   why.push(`Cruce EMA50/EMA200: ${cross50_200}`);
-  // }
+  const cross50_200 = crossed(ema50Arr, ema200Arr);
+  if (cross50_200) {
+    badges.push("EMA50↕EMA200");
+    score += 3;
+    why.push(`Cruce EMA50/EMA200: ${cross50_200}`);
+  }
 
   // 3) Pullback en tendencia alcista (EMA50>EMA200 y close≈EMA20 sin perder EMA50)
-  // if (e50 !== undefined && e200 !== undefined && e20 !== undefined) {
-  //   if (e50 > e200) {
-  //     const nearE20 = Math.abs(c - e20) / e20 <= 0.003; // 0.3%
-  //     const aboveE50 = c >= e50;
-  //     if (nearE20 && aboveE50) {
-  //       badges.push("Pullback EMA (alcista)");
-  //       score += 2;
-  //       why.push("EMA50>EMA200 y precio en pullback a EMA20 sin perder EMA50");
-  //     }
-  //   }
-  // }
+  if (e50 !== undefined && e200 !== undefined && e20 !== undefined) {
+    if (e50 > e200) {
+      const nearE20 = Math.abs(c - e20) / e20 <= 0.003; // 0.3%
+      const aboveE50 = c >= e50;
+      if (nearE20 && aboveE50) {
+        badges.push("Pullback EMA (alcista)");
+        score += 2;
+        why.push("EMA50>EMA200 y precio en pullback a EMA20 sin perder EMA50");
+      }
+    }
+  }
 
   // 4) Breakout + Volumen (cierre > max últimos 20 y Vol≥2×SMA20)
   if (vS20 !== undefined) {
@@ -280,7 +277,7 @@ export function evalSetups(data: Candle[]): EvalResult {
   }
 
   // Contexto tendencia y fuerza (bonus)
-  // if (e50 !== undefined && e200 !== undefined && e50 > e200) score += 1; // tendencia a favor
+  if (e50 !== undefined && e200 !== undefined && e50 > e200) score += 1; // tendencia a favor
   if (adxLast !== undefined && adxLast >= 25) score += 1; // fuerza de tendencia
 
   return {

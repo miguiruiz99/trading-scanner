@@ -9,6 +9,7 @@ import {
   type CandlestickData,
   type LineData,
   type HistogramData,
+  LogicalRange,
 } from "lightweight-charts";
 import { useTheme } from "next-themes";
 import type { CandleData, IndicatorData } from "@/lib/mock-data";
@@ -127,6 +128,27 @@ export function TradingChart({
     chartRef.current = chart;
     volumeChartRef.current = volumeChart;
     rsiChartRef.current = rsiChart;
+
+    function syncChartsLogical(source: IChartApi, targets: IChartApi[]) {
+      const ts = source.timeScale();
+      let lock = false;
+
+      ts.subscribeVisibleLogicalRangeChange((range: LogicalRange | null) => {
+        if (!range || lock) return;
+        lock = true;
+        targets.forEach((t) => {
+          try {
+            t.timeScale().setVisibleLogicalRange(range);
+          } catch {}
+        });
+        lock = false;
+      });
+    }
+
+    // bidireccional
+    syncChartsLogical(chart, [volumeChart, rsiChart]);
+    syncChartsLogical(volumeChart, [chart, rsiChart]);
+    syncChartsLogical(rsiChart, [chart, volumeChart]);
 
     let priceSeries: ISeriesApi<"Candlestick"> | ISeriesApi<"Line">;
 

@@ -16,6 +16,7 @@ export function ScannerTableSkeleton() {
             <th className="p-2">RSI</th>
             <th className="p-2">Volumen 24h</th>
             <th className="p-2">Acción</th>
+            <th className="p-2">TradingView</th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +39,9 @@ export function ScannerTableSkeleton() {
               </td>
               <td className="p-2">
                 <Skeleton className="h-4 w-20" />
+              </td>
+              <td className="p-2">
+                <Skeleton className="h-8 w-12 rounded-md" />
               </td>
               <td className="p-2">
                 <Skeleton className="h-8 w-12 rounded-md" />

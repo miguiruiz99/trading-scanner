@@ -9,11 +9,10 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { TrendingUp, TrendingDown, Volume2 } from "lucide-react";
+import { TrendingUp, TrendingDown, Volume2, BarChart3 } from "lucide-react";
 import { SortBy } from "@/enums/enums";
 import { SortButton } from "@/components/SortButton";
 import { ScannerPair } from "@/lib/mock-data";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 export const TableView = ({
@@ -25,7 +24,6 @@ export const TableView = ({
   getSetupBadgeColor: (setup: string) => string;
   formatVolume: (volume: number) => string;
 }) => {
-  const router = useRouter();
   return (
     <Card className="overflow-hidden">
       <Table>
@@ -58,6 +56,7 @@ export const TableView = ({
               </SortButton>
             </TableHead>
             <TableHead className="text-center">Acción</TableHead>
+            <TableHead className="text-center">TradingView</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -65,7 +64,11 @@ export const TableView = ({
             <TableRow
               key={pair.symbol}
               className="hover:bg-muted/30 cursor-pointer"
-              onClick={() => router.push(`/${pair.symbol}`)}
+              onClick={(e) => {
+                window.open(`/${pair.symbol}`, "_blank");
+                e.preventDefault();
+                e.stopPropagation();
+              }}
             >
               <TableCell>
                 <div className="flex items-center gap-2">
@@ -133,9 +136,34 @@ export const TableView = ({
                 </div>
               </TableCell>
               <TableCell className="text-center">
-                <Link href={`/${pair.symbol}`}>
+                <Link
+                  href={`/${pair.symbol}`}
+                  onClick={(e) => {
+                    window.open(`/${pair.symbol}`, "_blank");
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
                   <Button variant="outline" size="sm">
                     Ver
+                  </Button>
+                </Link>
+              </TableCell>
+              <TableCell className="text-center">
+                <Link
+                  href={`https://www.tradingview.com/chart/IlyZWuLp/?symbol=BINANCE%3A${pair.symbol}`}
+                  onClick={(e) => {
+                    window.open(
+                      `https://www.tradingview.com/chart/IlyZWuLp/?symbol=BINANCE%3A${pair.symbol}`,
+                      "_blank"
+                    );
+                    e.preventDefault();
+                    e.stopPropagation();
+                  }}
+                >
+                  <Button variant="outline" size="sm">
+                    <BarChart3 className="h-4 w-4" />
+                    Abrir
                   </Button>
                 </Link>
               </TableCell>
